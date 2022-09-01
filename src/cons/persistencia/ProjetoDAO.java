@@ -37,7 +37,7 @@ public class ProjetoDAO implements IProjetoCRUD{
             preparedStatement.setString(1, objProjeto.getNome_Projeto());
             preparedStatement.setString(2, objProjeto.getOrcamento_Projeto());
             preparedStatement.setString(3, objProjeto.getEndereco_Projeto());
-            preparedStatement.setInt   (4, objProjeto.getId_Consultor());
+            preparedStatement.setInt   (4, objProjeto.getId_Projeto());
             preparedStatement.executeUpdate();
         }catch (SQLException erro) {
             //Erro do comando SQL - chave, coluna, nome da tabela, ...
@@ -79,7 +79,7 @@ public class ProjetoDAO implements IProjetoCRUD{
         projeto.setNome_Projeto(resultSet.getString("nome_projeto"));
         projeto.setOrcamento_Projeto(resultSet.getString("orcamento_projeto"));
         projeto.setEndereco_Projeto(resultSet.getString("endereco_projeto"));
-        projeto.setId_Consultor(resultSet.getInt("id_consultor"));
+        projeto.setId_Projeto(resultSet.getInt("id_consultor"));
         return projeto;
     }
 
@@ -129,7 +129,7 @@ public class ProjetoDAO implements IProjetoCRUD{
         Projeto projeto = null;
         try {
             String sql = null;
-            sql = "select * from projeto;";
+            sql = "select * from projeto";
             Statement statement = null;
             statement = conexao.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
@@ -148,5 +148,84 @@ public class ProjetoDAO implements IProjetoCRUD{
         
         return listaprojeto;
     }
+
+    @Override
+    public ArrayList<Projeto> consultaListaProjetoIDP(int idProjeto) throws Exception {
+        ArrayList<Projeto> listaProjeto = new ArrayList<>();
+        Projeto projeto = null;
+        try {
+            String sql = null;
+            sql = "select * from projeto where id_projeto = ?";
+            PreparedStatement preparedStatement = null;
+            preparedStatement = conexao.prepareStatement(sql);
+            preparedStatement.setInt(1, idProjeto);
+            ResultSet resultSet = preparedStatement.executeQuery();            
+            while (resultSet.next()) {    
+                projeto = getProjetoResultSet(resultSet);
+                listaProjeto.add(projeto);
+            }
+            
+        } catch (SQLException erro) {
+            //Erro do comando SQL - chave, coluna, nome da tabela, ...
+            throw new Exception("SQL Erro Listar: "+ erro.getMessage());
+        } catch (Exception erro) {
+            throw erro;
+        }
+        
+        return listaProjeto;
+    }
+
+    @Override
+    public ArrayList<Projeto> consultaListaProjetoIDC(int idConsultor) throws Exception {
+        ArrayList<Projeto> listaProjeto = new ArrayList<>();
+        Projeto projeto = null;
+        try {
+            String sql = null;
+            sql = "select * from projeto where id_consultor = ?";
+            PreparedStatement preparedStatement = null;
+            preparedStatement = conexao.prepareStatement(sql);
+            preparedStatement.setInt(1, idConsultor);
+            ResultSet resultSet = preparedStatement.executeQuery();            
+            while (resultSet.next()) {    
+                projeto = getProjetoResultSet(resultSet);
+                listaProjeto.add(projeto);
+            }
+            
+        } catch (SQLException erro) {
+            //Erro do comando SQL - chave, coluna, nome da tabela, ...
+            throw new Exception("SQL Erro Listar: "+ erro.getMessage());
+        } catch (Exception erro) {
+            throw erro;
+        }
+        
+        return listaProjeto;
+    }
+
+    @Override
+    public ArrayList<Projeto> consultaListaProjetoDescricao(Projeto objProjeto) throws Exception {
+        ArrayList<Projeto> listaProjeto = new ArrayList<>();
+        Projeto projeto = null;
+        try {
+            String sql = null;
+            sql = "select * from projeto where nome_projeto = ?";
+            PreparedStatement preparedStatement = null;
+            preparedStatement = conexao.prepareStatement(sql);
+            preparedStatement.setString(1, objProjeto.getNome_Projeto());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {    
+                projeto = getProjetoResultSet(resultSet);
+                listaProjeto.add(projeto);
+            }
+            
+        } catch (SQLException erro) {
+            //Erro do comando SQL - chave, coluna, nome da tabela, ...
+            throw new Exception("SQL Erro Listar: "+ erro.getMessage());
+        } catch (Exception erro) {
+            throw erro;
+        }
+        
+        return listaProjeto;
+    }
+    
 }
 

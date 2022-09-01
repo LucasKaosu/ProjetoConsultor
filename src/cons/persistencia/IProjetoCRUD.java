@@ -16,4 +16,7 @@ public interface IProjetoCRUD {
     public void alterarProjeto (Projeto objProjeto) throws Exception;
     public void excluirProjeto (int id) throws Exception;
     public ArrayList<Projeto> listagemDeProjetos() throws Exception;
+    public ArrayList<Projeto> consultaListaProjetoIDP(int idProjeto) throws Exception;
+    public ArrayList<Projeto> consultaListaProjetoIDC(int idConsultor) throws Exception;
+    public ArrayList<Projeto> consultaListaProjetoDescricao(Projeto objProjeto) throws Exception;
 }
