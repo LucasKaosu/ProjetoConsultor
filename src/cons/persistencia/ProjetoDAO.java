@@ -79,7 +79,7 @@ public class ProjetoDAO implements IProjetoCRUD{
         projeto.setNome_Projeto(resultSet.getString("nome_projeto"));
         projeto.setOrcamento_Projeto(resultSet.getString("orcamento_projeto"));
         projeto.setEndereco_Projeto(resultSet.getString("endereco_projeto"));
-        projeto.setId_Projeto(resultSet.getInt("id_consultor"));
+        projeto.setId_Consultor(resultSet.getInt("id_consultor"));
         return projeto;
     }
 
