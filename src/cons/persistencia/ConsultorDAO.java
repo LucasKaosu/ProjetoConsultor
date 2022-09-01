@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 /**
  *
  * @author LucasKaosu
@@ -140,11 +141,63 @@ public class ConsultorDAO implements IConsultorCRUD{
         Consultor consultor = null;
         try {
             String sql = null;
-            sql = "select * from consultor;";
+            sql = "select * from consultor";
             Statement statement = null;
             statement = conexao.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             
+            while (resultSet.next()) {    
+                consultor = getConsultorResultSet(resultSet);
+                listaConsultor.add(consultor);
+            }
+            
+        } catch (SQLException erro) {
+            //Erro do comando SQL - chave, coluna, nome da tabela, ...
+            throw new Exception("SQL Erro Listar: "+ erro.getMessage());
+        } catch (Exception erro) {
+            throw erro;
+        }
+        
+        return listaConsultor;
+    }
+
+    @Override
+    public ArrayList<Consultor> consultaListaConsultoresID(int id) throws Exception {
+        ArrayList<Consultor> listaConsultor = new ArrayList<>();
+        Consultor consultor = null;
+        try {
+            String sql = null;
+            sql = "select * from consultor where id_consultor = ?";
+            PreparedStatement preparedStatement = null;
+            preparedStatement = conexao.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();            
+            while (resultSet.next()) {    
+                consultor = getConsultorResultSet(resultSet);
+                listaConsultor.add(consultor);
+            }
+            
+        } catch (SQLException erro) {
+            //Erro do comando SQL - chave, coluna, nome da tabela, ...
+            throw new Exception("SQL Erro Listar: "+ erro.getMessage());
+        } catch (Exception erro) {
+            throw erro;
+        }
+        
+        return listaConsultor;
+    }
+
+    @Override
+    public ArrayList<Consultor> consultaListaConsultoresNome(Consultor objConsultor) throws Exception {
+        ArrayList<Consultor> listaConsultor = new ArrayList<>();
+        Consultor consultor = null;
+        try {
+            String sql = null;
+            sql = "select * from consultor where nome_consultor = ?";
+            PreparedStatement preparedStatement = null;
+            preparedStatement = conexao.prepareStatement(sql);
+            preparedStatement.setString(1, objConsultor.getNome_Consultor());
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {    
                 consultor = getConsultorResultSet(resultSet);
                 listaConsultor.add(consultor);

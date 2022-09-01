@@ -4,7 +4,7 @@
  */
 package cons.persistencia;
 import cons.modelos.Consultor;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,5 +16,7 @@ public interface IConsultorCRUD {
     public Consultor consultarConsultor(int id) throws Exception;
     public void alterarConsultor (Consultor objConsultor) throws Exception;
     public void excluirConsultor (int id) throws Exception;   
-    public List<Consultor> listagemDeConsultores() throws Exception;    
+    public ArrayList<Consultor> listagemDeConsultores() throws Exception;
+    public ArrayList<Consultor> consultaListaConsultoresID(int id) throws Exception;
+    public ArrayList<Consultor> consultaListaConsultoresNome(Consultor objConsultor) throws Exception;
 }
